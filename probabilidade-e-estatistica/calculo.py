@@ -1,3 +1,4 @@
+import os
 
 tabela = [[[12.51, 13.50], 3],
           [[13.51, 14.50], 8],
@@ -34,26 +35,46 @@ def calculoPercentil(x, tabela):
     return calculo
 
 
+def imprimeOperacaoEscolhida(menu):
+    if menu == '1' or menu == 100:
+        return "percentil"
+    elif menu == '2' or menu == 10:
+        return "decil"
+    elif menu == '3' or menu == 3:
+        return "quartil"
+
+def retornaX(til):
+    while True:
+        x = int(input("Digite o %s: " % (imprimeOperacaoEscolhida(til))))
+        if(x > 0 and x <= til):
+            return x
+        else:
+            print("%s inválido! Digite um percentil válido." % (imprimeOperacaoEscolhida(til)))
+            continue
+
 while True:
+    os.system("cls")
     print("--- CALCULO ---")
     print("1 - Percentil")
     print("2 - Decil")
     print("3 - Quartil")
     menu = input(">>> ")
     if menu == '1':
-        x = int(input("Digite o percentil: "))
+        x = retornaX(100)
         x /= 100
         calculo = calculoPercentil(x, tabela)
     elif menu == '2':
-        x = int(input("Digite o decil: "))
+        x = retornaX(10)
         x = (x * 10)/100
         calculo = calculoPercentil(x, tabela)
     elif(menu == '3'):
-        x = int(input("Digite o quartil: "))
+        x = retornaX(3)
         x = (25 * x) / 100
         calculo = calculoPercentil(x, tabela)
     else:
         print("Opção inválida!")
-    
-    print("O cálculo do percentil é ", calculo)
+        os.system('pause')
+        continue
+
+    print("O cálculo do %s é: %f" % (imprimeOperacaoEscolhida(menu), calculo))
     break
