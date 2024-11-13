@@ -7,6 +7,66 @@ tabela = [[[12.51, 13.50], 3],
           [[16.51, 17.50], 9],
           [[17.51, 18.50], 2]]
 
+def ordenaTabela(tabela):
+    numerosOrdenados = []
+    for classe in tabela:
+        i = 0
+        while i < classe[1]:
+            numerosOrdenados.append((classe[0][0] + classe[0][1]) / 2)
+            i += 1
+    return numerosOrdenados
+
+def pontoMedio(tabela):
+    pontoMedioClasses = []
+    i = 0
+    while i < len(tabela):
+        pontoMedioClasses.append((tabela[i][0][0] + tabela[i][0][1]) / 2) 
+        i += 1
+    return pontoMedioClasses
+
+def media(tabela):
+    pontoMedioClasses = pontoMedio(tabela)
+    media = 0
+    i = 0
+    while i < len(tabela):
+        media += pontoMedioClasses[i] * tabela[i][1]
+        i += 1
+    media = media / somaFrequencias(tabela)
+    return media
+
+def moda(tabela):
+    maior = 0
+    pegaModa = []
+    i = 0
+    while i < len(tabela):
+        if(tabela[i][1] > maior):
+            maior = tabela[i][1]
+            pegaModa = tabela[i]
+        i += 1
+    return pegaModa
+
+def mediana(tabela):
+    elementosOrdenados = ordenaTabela(tabela)
+    meio = somaFrequencias(tabela) / 2
+    if(meio % 1 == 0):
+        meio += 0.5
+        pegaMediana = elementosOrdenados[int(meio)]
+        return pegaMediana
+    else:
+        pegaMediana = (elementosOrdenados[meio] + elementosOrdenados[meio + 1]) / 2
+        return pegaMediana
+        
+def desvioPadrao(tabela):
+    mediaTabela = media(tabela)
+    elementosOrdenados = pontoMedio(tabela)
+    calculoDesvioPadrao = 0
+    i = 0
+    while i < len(elementosOrdenados):
+        calculoDesvioPadrao += (elementosOrdenados[i] - mediaTabela) ** 2
+        i += 1
+    calculoDesvioPadrao = calculoDesvioPadrao / (len(tabela) - 1)
+    return calculoDesvioPadrao
+
 def somaFrequencias(tabela, iteraAte=len(tabela)):
     soma = 0
     i = 0
@@ -54,6 +114,10 @@ def retornaX(til):
 
 while True:
     os.system("cls")
+    print("média:  %s" % media(tabela))
+    print("moda: %s" % moda(tabela)[0])
+    print("mediana: %.3f" % mediana(tabela))
+    print("desvio padrão: %.3f" % desvioPadrao(tabela))
     print("--- CALCULO ---")
     print("1 - Percentil")
     print("2 - Decil")
