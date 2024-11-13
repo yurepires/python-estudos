@@ -49,11 +49,11 @@ def mediana(tabela):
     elementosOrdenados = ordenaTabela(tabela)
     meio = somaFrequencias(tabela) / 2
     if(meio % 1 == 0):
-        meio += 0.5
-        pegaMediana = elementosOrdenados[int(meio)]
+        pegaMediana = (elementosOrdenados[meio] + elementosOrdenados[meio + 1]) / 2
         return pegaMediana
     else:
-        pegaMediana = (elementosOrdenados[meio] + elementosOrdenados[meio + 1]) / 2
+        meio += 0.5
+        pegaMediana = elementosOrdenados[int(meio)]
         return pegaMediana
         
 def desvioPadrao(tabela):
