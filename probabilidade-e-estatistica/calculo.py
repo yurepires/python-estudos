@@ -1,11 +1,12 @@
 import os
+import matplotlib.pyplot as plt
+import numpy as np 
 
-tabela = [[[12.51, 13.50], 3],
-          [[13.51, 14.50], 8],
-          [[14.51, 15.50], 15],
-          [[15.51, 16.50], 13],
-          [[16.51, 17.50], 9],
-          [[17.51, 18.50], 2]]
+tabela = [[[2, 6], 5],
+           [[6, 10], 12],
+           [[10, 14], 21],
+           [[14, 18], 15],
+           [[18, 22], 7]]
 
 def ordenaTabela(tabela):
     numerosOrdenados = []
@@ -45,11 +46,18 @@ def moda(tabela):
         i += 1
     return pegaModa
 
+def maiorFrequencia(tabela):
+    maior = 0
+    for i in tabela:
+        if(i[1] > maior):
+            maior = i[1]
+    return maior
+
 def mediana(tabela):
     elementosOrdenados = ordenaTabela(tabela)
     meio = somaFrequencias(tabela) / 2
     if(meio % 1 == 0):
-        pegaMediana = (elementosOrdenados[meio] + elementosOrdenados[meio + 1]) / 2
+        pegaMediana = (elementosOrdenados[int(meio)] + elementosOrdenados[int(meio) + 1]) / 2
         return pegaMediana
     else:
         meio += 0.5
@@ -112,8 +120,33 @@ def retornaX(til):
             print("%s inválido! Digite um percentil válido." % (imprimeOperacaoEscolhida(til)))
             continue
 
+def separaClasses(tabela):
+    classesSeparadas = []
+    for i in tabela:
+        classesSeparadas.append(str(i[0][0]) + " a " + str(i[0][1]))
+    return classesSeparadas
+
+def separaFrequencias(tabela):
+    frequenciasSeparadas = []
+    for i in tabela:
+        frequenciasSeparadas.append(i[1])
+    return frequenciasSeparadas
+
+
+
 while True:
     os.system("cls")
+    classes = separaClasses(tabela)
+    frequencias = separaFrequencias(tabela)
+
+    plt.ylabel("Frequência")
+    plt.xlabel("Classes")
+    plt.bar(classes, frequencias, width = 0.3)
+    plt.yticks(np.arange(frequencias[0], maiorFrequencia(tabela), 3))
+    plt.xticks(rotation=45, ha='right')
+    plt.grid(axis='y', linestyle='--')
+    plt.show()
+    print("--- DADOS ---")
     print("média:  %s" % media(tabela))
     print("moda: %s" % moda(tabela)[0])
     print("mediana: %.3f" % mediana(tabela))
